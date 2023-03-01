@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 
 const HackerNewsStories = () => {
   const [stories, setStories] = useState(null);
@@ -24,20 +24,21 @@ const HackerNewsStories = () => {
   }, []);
 
   return (
-    <div className="wrapper">
-      <h2>Latest HN Stories</h2>
-      {loading && <div>HackerNews frontpage stories loading...</div>}
-      {error && <div>{`Problem fetching the HackeNews Stories - ${error}`}</div>}
-      <div className="stories-wrapper">
-        {stories &&
-          stories.map(({ objectID, url, title, author, points }) => (
-            title && url &&
-            <div className='stories-list' key={objectID}>
-              <h3><a href={url} target="_blank" rel="noreferrer">{title}</a> - By <b>{author}</b> ({points} points)</h3>
-            </div>                        
-          ))}
-      </div>
+    <Fragment> {/* You can also use the shorter syntax of <> */} 
+    <h2>Latest HN Stories</h2>
+    {loading && <div>HackerNews frontpage stories loading...</div>}
+    {error && <div>{`Problem fetching the HackeNews Stories - ${error}`}</div>}
+    <div className="stories-wrapper">
+      {stories &&
+        stories.map(({ objectID, url, title, author, points }) => (
+          title && url &&
+          <div className='stories-list' key={objectID}>
+            <h3><a href={url} target="_blank" rel="noreferrer">{title}</a> - By <b>{author}</b> ({points} points)</h3>
+          </div>                        
+        ))}
     </div>
+    {/* </> is the closing tag for shorter React fragment syntax */}
+    </Fragment>
   );
 };
 
